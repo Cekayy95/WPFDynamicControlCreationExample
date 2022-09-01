@@ -10,9 +10,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
+            
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding Person.Id}"></TextBlock>
-        <TextBlock Grid.Column="1" Text="{Binding Person.Name}"></TextBlock>
+        <DataGrid ItemsSource="{Binding Persons}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
