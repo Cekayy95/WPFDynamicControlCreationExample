@@ -5,8 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Threading;
-
-
 namespace DynamicControlCreationExample.WPFMVVM.ViewModel;
 
 public class MainViewModel : BaseViewModel
@@ -15,14 +13,6 @@ public class MainViewModel : BaseViewModel
     public ObservableCollection<PersonViewModel> PersonsFromDataBase { get; } = new ObservableCollection<PersonViewModel>();
     public ObservableCollection<TabViewModel> TabForEveryPerson { get; } = new ObservableCollection<TabViewModel>();
 
-    public void CreateTabViewModelForEveryPerson(params PersonViewModel[] persons)
-    {
-        foreach (var personViewModel in persons)
-        {
-            TabForEveryPerson.Add(new TabViewModel(new PersonViewModel(personViewModel.Id, personViewModel.Name)));
-        }
-        RaisePropertyChanged(nameof(TabForEveryPerson));
-    }
 
     public MainViewModel()
     {
@@ -39,8 +29,16 @@ public class MainViewModel : BaseViewModel
         CreateTabViewModelForEveryPerson(persons);
         
     }
+    public void CreateTabViewModelForEveryPerson(params PersonViewModel[] persons)
+    {
+        foreach (var personViewModel in persons)
+        {
+            TabForEveryPerson.Add(new TabViewModel(new PersonViewModel(personViewModel.Id, personViewModel.Name)));
+        }
+        RaisePropertyChanged(nameof(TabForEveryPerson));
+    }
 
-    public async void AddPersonEvery5Sec(object? obj, ElapsedEventArgs args)
+    public void AddPersonEvery5Sec(object? obj, ElapsedEventArgs args)
     {
         if (TabForEveryPerson.Count == 10)
         {

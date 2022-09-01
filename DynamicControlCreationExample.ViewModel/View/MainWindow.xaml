@@ -17,6 +17,7 @@
                     <TextBlock Text="{Binding Person.Id}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
+            
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <view:UcTab/>
