@@ -42,6 +42,12 @@ public class MainViewModel : BaseViewModel
 
     public async void AddPersonEvery5Sec(object? obj, ElapsedEventArgs args)
     {
+        if (TabForEveryPerson.Count == 10)
+        {
+            timer.Stop();
+            timer.Dispose();
+            return;
+        }
         TabForEveryPerson.AddOnUI(new TabViewModel(new PersonViewModel($"{TabForEveryPerson.Count + 1}",
             $"Mustermann{TabForEveryPerson.Count + 1}")));
         RaisePropertyChanged(nameof(TabForEveryPerson));
