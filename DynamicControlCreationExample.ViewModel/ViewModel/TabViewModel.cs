@@ -11,9 +11,10 @@ public class TabViewModel : BaseViewModel
     public TabViewModel(PersonViewModel person, MainViewModel mainViewModel)
     {
         Persons!.Add(person);
-        Persons.Add(new PersonViewModel($"{mainViewModel.TabForEveryPerson.Count + 1}",
-            $"StaticPerson {mainViewModel.TabForEveryPerson.Count + 1}"));
+        Persons.Add(new PersonViewModel($"{mainViewModel.TabForEveryPerson.Count + 2}",
+            $"StaticPerson {mainViewModel.TabForEveryPerson.Count + 2}"));
         Person = person;
         _mainViewModel = mainViewModel;
     }
+
 }

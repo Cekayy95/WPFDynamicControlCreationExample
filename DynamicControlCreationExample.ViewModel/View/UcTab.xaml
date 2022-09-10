@@ -12,7 +12,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             
         </Grid.ColumnDefinitions>
-        <DataGrid ItemsSource="{Binding Persons}">
+        <DataGrid ItemsSource="{Binding Persons}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" />

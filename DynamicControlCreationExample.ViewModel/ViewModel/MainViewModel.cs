@@ -9,16 +9,22 @@ namespace DynamicControlCreationExample.WPFMVVM.ViewModel;
 
 public class MainViewModel : BaseViewModel
 {
-    private System.Timers.Timer timer;
+    public System.Timers.Timer TimerForAddPerson;
     public ObservableCollection<PersonViewModel> PersonsFromDataBase { get; } = new ObservableCollection<PersonViewModel>();
     public ObservableCollection<TabViewModel> TabForEveryPerson { get; } = new ObservableCollection<TabViewModel>();
+    private TabViewModel selectedTabViewModel;
 
+    public TabViewModel SelectedTabViewModel
+    {
+        get => selectedTabViewModel;
+        set => SetProperty(ref selectedTabViewModel, value);
+    }
 
     public MainViewModel()
     {
-        timer = new System.Timers.Timer(5000);
-        timer.Elapsed += AddPersonEvery5Sec;
-        timer.Start();
+        TimerForAddPerson = new System.Timers.Timer(5000);
+        TimerForAddPerson.Elapsed += AddPersonEvery5Sec;
+        TimerForAddPerson.Start();
         PersonViewModel[] persons =
         {
             new PersonViewModel("1", "Hans"),
@@ -33,18 +39,20 @@ public class MainViewModel : BaseViewModel
     {
         foreach (var personViewModel in persons)
         {
-            TabForEveryPerson.Add(new TabViewModel(new PersonViewModel(personViewModel.Id, personViewModel.Name),this));
+            TabForEveryPerson.Add(new TabViewModel(personViewModel,this));
             PersonsFromDataBase.Add(personViewModel);
         }
-        RaisePropertyChanged(nameof(TabForEveryPerson));
+        //RaisePropertyChanged(nameof(TabForEveryPerson));
     }
 
     public void AddPersonEvery5Sec(object? obj, ElapsedEventArgs args)
     {
-        if (TabForEveryPerson.Count == 10)
+        if (TabForEveryPerson.Count > 0)
         {
-            timer.Stop();
-            timer.Dispose();
+            //TabForEveryPerson.DeleteOnUi();
+            RaisePropertyChanged(nameof(TabForEveryPerson));
+            //TimerForAddPerson.Stop();
+            //TimerForAddPerson.Dispose();
             return;
         }
         TabForEveryPerson.AddOnUI(new TabViewModel(new PersonViewModel($"{TabForEveryPerson.Count + 1}",

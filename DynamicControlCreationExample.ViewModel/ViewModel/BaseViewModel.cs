@@ -9,7 +9,7 @@ public class BaseViewModel : INotifyPropertyChanged
 
     public void SetProperty<T>(ref T backingField, T value, [CallerMemberName] string propertyName = "")
     {
-        if (backingField!.Equals(value))
+        if (backingField is not null && backingField!.Equals(value))
             return;
         backingField = value;
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

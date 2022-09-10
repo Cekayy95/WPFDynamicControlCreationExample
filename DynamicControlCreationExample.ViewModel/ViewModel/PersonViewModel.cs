@@ -9,9 +9,9 @@ public class PersonViewModel : BaseViewModel
         //RaisePropertyChanged(nameof(Name));
     }
 
-    public string Id { get; init; }
+    public string Id { get; set; }
 
-    public string Name { get; init; }
+    public string Name { get; set; }
 
     
 }

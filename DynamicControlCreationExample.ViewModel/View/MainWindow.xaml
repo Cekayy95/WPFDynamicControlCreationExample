@@ -5,16 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:DynamicControlCreationExample.WPFMVVM.ViewModel"
         xmlns:view="clr-namespace:DynamicControlCreationExample.WPFMVVM.View"
+        xmlns:converter="clr-namespace:DynamicControlCreationExample.WPFMVVM.View.NewFolder"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         >
-
+    <Window.Resources>
+        <converter:DataBindingDebugConverter x:Key="BindingDebugConverter"></converter:DataBindingDebugConverter>
+    </Window.Resources>
     <Grid>
         <TabControl ItemsSource="{Binding TabForEveryPerson, UpdateSourceTrigger=PropertyChanged}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Person.Id}"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Person.Id}"/>
+                        <TextBlock Grid.Row="2" Text="{Binding Person.Name}"/>
+                    </Grid>
                 </DataTemplate>
             </TabControl.ItemTemplate>
             
