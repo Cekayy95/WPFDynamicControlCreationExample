@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DynamicControlCreationExample.WPFMVVM.View.NewFolder;
+namespace DynamicControlCreationExample.WPFMVVM.View.Converter;
 
 public class DataBindingDebugConverter : IValueConverter
 {

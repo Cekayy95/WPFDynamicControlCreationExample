@@ -5,16 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:DynamicControlCreationExample.WPFMVVM.ViewModel"
         xmlns:view="clr-namespace:DynamicControlCreationExample.WPFMVVM.View"
-        xmlns:converter="clr-namespace:DynamicControlCreationExample.WPFMVVM.View.NewFolder"
+        xmlns:converter="clr-namespace:DynamicControlCreationExample.WPFMVVM.View.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         >
     <Window.Resources>
         <converter:DataBindingDebugConverter x:Key="BindingDebugConverter"></converter:DataBindingDebugConverter>
+        <converter:ContentTemplateSelector x:Key="myDataTemplateSelector"/>
+        <DataTemplate x:Key="ShowAllTabs">
+            <view:UcTab/>
+        </DataTemplate>
+        <DataTemplate x:Key="ShowOnlyId">
+            <view:UcTabId/>
+        </DataTemplate>
+        <DataTemplate x:Key="ShowOnlyName">
+            <view:UcTabName/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <TabControl ItemsSource="{Binding TabForEveryPerson, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl x:Name="MainTabControl" ItemsSource="{Binding TabForEveryPerson, UpdateSourceTrigger=PropertyChanged}"
+                    ContentTemplateSelector="{StaticResource myDataTemplateSelector}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -29,11 +40,7 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
             
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <view:UcTab/>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
+            
         </TabControl>
     </Grid>
 </Window>
