@@ -39,7 +39,7 @@ public class MainViewModel : BaseViewModel
     {
         foreach (var personViewModel in persons)
         {
-            TabForEveryPerson.Add(new TabViewModel(personViewModel,TabForEveryPerson.Count,this));
+            TabForEveryPerson.Add(new TabViewModel(personViewModel,this));
             PersonsFromDataBase.Add(personViewModel);
         }
         //RaisePropertyChanged(nameof(TabForEveryPerson));
@@ -56,7 +56,7 @@ public class MainViewModel : BaseViewModel
             return;
         }
         TabForEveryPerson.AddOnUI(new TabViewModel(new PersonViewModel($"{TabForEveryPerson.Count + 1}",
-            $"Mustermann{TabForEveryPerson.Count + 1}"), 0,this));
+            $"Mustermann{TabForEveryPerson.Count + 1}"),this));
         RaisePropertyChanged(nameof(TabForEveryPerson));
     }
 }
