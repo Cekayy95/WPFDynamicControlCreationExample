@@ -43,10 +43,11 @@ public class MainViewModel : BaseViewModel, IDataInterface
         CreateTabViewModelForEveryPerson(GetPersonViewModelData().GetAwaiter().GetResult());
         _selectedTabViewModel = TabForEveryPerson.First();
     }
-    public void CreateTabViewModelForEveryPerson(params PersonViewModel[] persons)
+    public void CreateTabViewModelForEveryPerson(params IPerson[] persons)
     {
-        foreach (var personViewModel in persons)
+        foreach (var iperson in persons)
         {
+            if (iperson is not PersonViewModel personViewModel) continue;
             TabForEveryPerson.Add(new TabViewModel(personViewModel, TabForEveryPerson.Count, this));
             PersonsFromDataBase.Add(personViewModel);
         }
@@ -84,7 +85,7 @@ public class MainViewModel : BaseViewModel, IDataInterface
     }
 
     
-    public async Task<PersonViewModel[]> GetPersonViewModelData()
+    public async Task<IPerson[]> GetPersonViewModelData()
     {
         //get Data from DB not suitable for unit testing
         //use NSubstitute for mocking
@@ -118,5 +119,5 @@ public class MainViewModelClassData : IEnumerable<object[]>
 }
 public interface IDataInterface
 {
-    Task<PersonViewModel[]> GetPersonViewModelData();
+    Task<IPerson[]> GetPersonViewModelData();
 }

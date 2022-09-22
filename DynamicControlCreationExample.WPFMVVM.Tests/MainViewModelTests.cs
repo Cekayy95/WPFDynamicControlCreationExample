@@ -47,12 +47,11 @@ public class MainViewModelTests
     public async Task GetPersonData_ShouldReturnPersonViewModelArray()
     {
         //Arrange
-        var sut = new MainViewModel();
         var substitute = Substitute.For<IDataInterface>();
         substitute.GetPersonViewModelData().Returns(new[]
         {
-            new PersonViewModel("1", "UnitTest1"),
-            new PersonViewModel("2", "UnitTest2"),
+            new PersonViewModel("1", "UnitTest1") as IPerson, 
+            new PersonViewModel("2", "UnitTest2") as IPerson, 
 
         });
         //Act
@@ -64,7 +63,10 @@ public class MainViewModelTests
         personsArray.Should().NotBeEmpty();
         personsArray.Should().OnlyHaveUniqueItems(x=> x.Id);
         personsArray.Should().OnlyHaveUniqueItems(x=> x.Name);
-        
+        personsArray.Should().Contain(x => x.Id == "1" && x.Name == "UnitTest1");
+        personsArray.Should().Contain(x => x.Id == "2" && x.Name == "UnitTest2");
+        personsArray.Should().NotContain(x => x.Id == "3" && x.Name == "UnitTest3");
+
     }
     [Theory]
     [InlineData(10, 4, 6)]
@@ -115,9 +117,6 @@ public class MainViewModelTests
     }
     [Theory]
     [InlineData(10.0, 100.0, 10.0)]
-    [InlineData(10.0, 50.0, 5.0)]
-    [InlineData(2.0, 50.0, 25.0)]
-    [InlineData(2.5, 5.0, 2.0)]
     [InlineData(-1.0, -4.0, 4.0)]
     public void Divide2Numbers_ShouldDivide2Numbers(double result, params double[] numbers)
     {

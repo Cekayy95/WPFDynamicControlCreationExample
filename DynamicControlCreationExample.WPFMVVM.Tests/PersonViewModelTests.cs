@@ -48,6 +48,32 @@ public class PersonViewModelTests
         propChanged.Should().Be(true);
         settedId.Should().Be("42069");
     }
+    [Fact]
+    public void NameProp_ShouldChangeWhenSetterIsCalled()
+    {
+        //Arrange
+        PersonViewModel sut = new("1", "name");
+        var propChanged = false;
+        string settedName = string.Empty;
+        sut.PropertyChanged += (sender, args) =>
+        {
+            if (args.PropertyName == nameof(PersonViewModel.Name))
+                propChanged = true;
+            if (sender is PersonViewModel pers)
+            {
+                settedName = pers.Name;
+            }
+        };
 
-    
+        //Act
+        sut.Name.Should().Be("name");
+        sut.Name = "NewNameForNewLife";
+
+        //Assert
+        sut.Name.Should().Be("NewNameForNewLife", "Because changed to awesome number");
+        propChanged.Should().Be(true);
+        settedName.Should().Be("NewNameForNewLife");
+    }
+
+
 }

@@ -1,5 +1,5 @@
 ﻿namespace DynamicControlCreationExample.WPFMVVM.ViewModel;
-public class PersonViewModel : BaseViewModel
+public class PersonViewModel : BaseViewModel, IPerson
 {
     private string _id;
     private string _name;
@@ -27,4 +27,12 @@ public class PersonViewModel : BaseViewModel
         return $"{this._id}: {this._name}";
     }
     
+}
+
+public interface IPerson
+{
+    string Id { get; set; }
+    string Name { get; set; }
+    abstract string ToString();
+
 }
