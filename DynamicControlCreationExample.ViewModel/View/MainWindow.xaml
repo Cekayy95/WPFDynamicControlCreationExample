@@ -11,8 +11,13 @@
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         >
     <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
         <converter:DataBindingDebugConverter x:Key="BindingDebugConverter"></converter:DataBindingDebugConverter>
-        <converter:ContentTemplateSelector x:Key="myDataTemplateSelector"/>
+        <converter:ContentTemplateSelector x:Key="MyDataTemplateSelector"/>
         <DataTemplate x:Key="ShowAllTabs">
             <view:UcTab/>
         </DataTemplate>
@@ -22,10 +27,22 @@
         <DataTemplate x:Key="ShowOnlyName">
             <view:UcTabName/>
         </DataTemplate>
+        <DataTemplate x:Key="FallbackTemplate">
+            <view:UcTab></view:UcTab>
+        </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="MainTabControl" ItemsSource="{Binding TabForEveryPerson, UpdateSourceTrigger=PropertyChanged}"
-                    ContentTemplateSelector="{StaticResource myDataTemplateSelector}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
+            <CheckBox Style="{StaticResource CheckBoxStyle1}" IsChecked="{Binding CheckBoxIsChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <CheckBox IsChecked="{Binding CheckBoxIsChecked2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        </StackPanel>
+        <TabControl Grid.Row="1" x:Name="MainTabControl" ItemsSource="{Binding TabForEveryPerson, UpdateSourceTrigger=PropertyChanged}"
+                    ContentTemplateSelector="{StaticResource MyDataTemplateSelector}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>

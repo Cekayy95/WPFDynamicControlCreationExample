@@ -4,8 +4,7 @@ namespace DynamicControlCreationExample.WPFMVVM.ViewModel;
 
 public class TabViewModel : BaseViewModel
 {
-    private readonly MainViewModel _mainViewModel;
-    public ObservableCollection<PersonViewModel> Persons { get; init; } = new ObservableCollection<PersonViewModel>();
+    public ObservableCollection<PersonViewModel> Persons { get; init; } = new ();
     public PersonViewModel Person { get; init; }
     public int Index { get; set; }
 
@@ -15,7 +14,6 @@ public class TabViewModel : BaseViewModel
         Persons.Add(new PersonViewModel($"{mainViewModel.TabForEveryPerson.Count + 2}",
             $"StaticPerson {mainViewModel.TabForEveryPerson.Count + 2}"));
         Person = person;
-        _mainViewModel = mainViewModel;
         Index = index;
     }
 
