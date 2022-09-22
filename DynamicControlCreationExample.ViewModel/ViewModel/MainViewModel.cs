@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace DynamicControlCreationExample.WPFMVVM.ViewModel;
 
 public class MainViewModel : BaseViewModel, IDataInterface
 {
-    public System.Timers.Timer TimerForAddPerson;
+    
     public ObservableCollection<PersonViewModel> PersonsFromDataBase { get; } = new ();
     public ObservableCollection<TabViewModel> TabForEveryPerson { get; } = new ();
 
@@ -37,9 +36,6 @@ public class MainViewModel : BaseViewModel, IDataInterface
 
     public MainViewModel()
     {
-        TimerForAddPerson = new System.Timers.Timer(5000);
-        TimerForAddPerson.Elapsed += AddPersonEvery5Sec;
-        TimerForAddPerson.Start();
         CreateTabViewModelForEveryPerson(GetPersonViewModelData().GetAwaiter().GetResult());
         _selectedTabViewModel = TabForEveryPerson.First();
     }
@@ -72,18 +68,6 @@ public class MainViewModel : BaseViewModel, IDataInterface
             throw new DivideByZeroException("Cannot divide by zero");
         return left/divisor;
     }
-    public void AddPersonEvery5Sec(object? obj, ElapsedEventArgs args)
-    {
-        if (TabForEveryPerson.Count > 0)
-        {
-            RaisePropertyChanged(nameof(TabForEveryPerson));
-            return;
-        }
-        TabForEveryPerson.AddOnUI(new TabViewModel(new PersonViewModel($"{TabForEveryPerson.Count + 1}",
-            $"Mustermann{TabForEveryPerson.Count + 1}"), 0,this));
-        RaisePropertyChanged(nameof(TabForEveryPerson));
-    }
-
     
     public async Task<IPerson[]> GetPersonViewModelData()
     {
